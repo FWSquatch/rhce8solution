@@ -4,6 +4,3 @@
   roles: 
     - sample-apache
   tasks:
-    - name: 
-      debug:
-        msg: oyeah

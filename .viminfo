@@ -18,9 +18,9 @@ $
 
 # Command Line History (newest to oldest):
 :q
-|2,0,1605469410,,"q"
+|2,0,1605469810,,"q"
 :wq
-|2,0,1605468654,,"wq"
+|2,0,1605469779,,"wq"
 :w
 |2,0,1605468081,,"w"
 :q!
@@ -34,7 +34,7 @@ $
 
 # Search String History (newest to oldest):
 ? @$
-|2,1,1605449079,,"@$"
+|2,1,1605469806,,"@$"
 ?/node3
 |2,1,1605393673,47,"node3"
 
@@ -45,78 +45,110 @@ $
 # Debug Line History (newest to oldest):
 
 # Registers:
-"0	LINE	0
-	- import_playbook: facts.yml
-|3,0,0,1,1,0,1605468616,"- import_playbook: facts.yml"
+""0	LINE	0
+	        msg: oyeah
+|3,1,0,1,1,0,1605469807,"        msg: oyeah"
 "1	LINE	0
-	    uid: 1203
-|3,0,1,1,1,0,1605468276,"    uid: 1203"
+	        msg: oyeah
+|3,0,1,1,1,0,1605469777,"        msg: oyeah"
 "2	LINE	0
-	  - username: testy
-|3,0,2,1,1,0,1605468276,"  - username: testy"
+	      debug:
+|3,0,2,1,1,0,1605469777,"      debug:"
 "3	LINE	0
-	        verbosity: 1
-|3,0,3,1,1,0,1605458256,"        verbosity: 1"
+	    - name: 
+|3,0,3,1,1,0,1605469777,"    - name: "
 "4	LINE	0
+	    uid: 1203
+|3,0,4,1,1,0,1605468276,"    uid: 1203"
+"5	LINE	0
+	  - username: testy
+|3,0,5,1,1,0,1605468276,"  - username: testy"
+"6	LINE	0
+	        verbosity: 1
+|3,0,6,1,1,0,1605458256,"        verbosity: 1"
+"7	LINE	0
 	    - name: Users whose ID starts with 1
 	      debug:
 	        msg: "{{ item.uid }}"
 	      loop: "{{ users }}"
 	      when: "{{ item.username }} == patrick"
-|3,0,4,1,5,0,1605458217,"    - name: Users whose ID starts with 1","      debug:","        msg: \"{{ item.uid }}\"","      loop: \"{{ users }}\"","      when: \"{{ item.username }} == patrick\""
-"5	LINE	0
+|3,0,7,1,5,0,1605458217,"    - name: Users whose ID starts with 1","      debug:","        msg: \"{{ item.uid }}\"","      loop: \"{{ users }}\"","      when: \"{{ item.username }} == patrick\""
+"8	LINE	0
 	    - name: ddWebservers Yo
 	      block:
 	        debug:
 	          msg: "{{ item.uid }} is the number of {{ item.username }}"
 	        when: item.uid > 1500
 	      loop: "{{ users }}"
-|3,0,5,1,6,0,1605457902,"    - name: ddWebservers Yo","      block:","        debug:","          msg: \"{{ item.uid }} is the number of {{ item.username }}\"","        when: item.uid > 1500","      loop: \"{{ users }}\""
-"6	LINE	0
-	    - vars/user_list.yml
-|3,0,6,1,1,0,1605457878,"    - vars/user_list.yml"
-"7	LINE	0
-	    - secret.yml
-|3,0,7,1,1,0,1605457878,"    - secret.yml"
-"8	LINE	0
-	  vars_files: 
-|3,0,8,1,1,0,1605457877,"  vars_files: "
+|3,0,8,1,6,0,1605457902,"    - name: ddWebservers Yo","      block:","        debug:","          msg: \"{{ item.uid }} is the number of {{ item.username }}\"","        when: item.uid > 1500","      loop: \"{{ users }}\""
 "9	LINE	0
-	key="{{ lookup('file', '/home/automation/.ssh/id_rsa.pub') }}"
-|3,0,9,1,1,0,1605455950,"key=\"{{ lookup('file', '/home/automation/.ssh/id_rsa.pub') }}\""
-""-	CHAR	0
+	    - vars/user_list.yml
+|3,0,9,1,1,0,1605457878,"    - vars/user_list.yml"
+"-	CHAR	0
 	facts
-|3,1,36,0,1,0,1605468628,"facts"
+|3,0,36,0,1,0,1605468628,"facts"
 
 # File marks:
-'0  1  0  ~/.git/info/exclude
-|4,48,1,0,1605469410,"~/.git/info/exclude"
-'1  52  6  ~/plays/users.yml
-|4,49,52,6,1605469321,"~/plays/users.yml"
-'2  16  29  ~/plays/all.yml
-|4,50,16,29,1605468654,"~/plays/all.yml"
-'3  10  4  ~/plays/vars/user_list.yml
-|4,51,10,4,1605468277,"~/plays/vars/user_list.yml"
-'4  11  12  ~/plays/vars/user_list.yml
-|4,52,11,12,1605468142,"~/plays/vars/user_list.yml"
-'5  12  12  ~/plays/vars/user_list.yml
-|4,53,12,12,1605468142,"~/plays/vars/user_list.yml"
-'6  52  23  ~/plays/users.yml
-|4,54,52,23,1605468082,"~/plays/users.yml"
-'7  27  34  ~/plays/users.yml
-|4,55,27,34,1605467822,"~/plays/users.yml"
-'8  27  34  ~/plays/users.yml
-|4,56,27,34,1605467822,"~/plays/users.yml"
+'0  1  0  ~/plays/roles/my-test/handlers/main.yml
+|4,48,1,0,1605469810,"~/plays/roles/my-test/handlers/main.yml"
+'1  6  2  ~/plays/apache.yml
+|4,49,6,2,1605469779,"~/plays/apache.yml"
+'2  1  0  ~/.git/info/exclude
+|4,50,1,0,1605469410,"~/.git/info/exclude"
+'3  52  6  ~/plays/users.yml
+|4,51,52,6,1605469321,"~/plays/users.yml"
+'4  16  29  ~/plays/all.yml
+|4,52,16,29,1605468654,"~/plays/all.yml"
+'5  10  4  ~/plays/vars/user_list.yml
+|4,53,10,4,1605468277,"~/plays/vars/user_list.yml"
+'6  11  12  ~/plays/vars/user_list.yml
+|4,54,11,12,1605468142,"~/plays/vars/user_list.yml"
+'7  12  12  ~/plays/vars/user_list.yml
+|4,55,12,12,1605468142,"~/plays/vars/user_list.yml"
+'8  52  23  ~/plays/users.yml
+|4,56,52,23,1605468082,"~/plays/users.yml"
 '9  27  34  ~/plays/users.yml
 |4,57,27,34,1605467822,"~/plays/users.yml"
 
 # Jumplist (newest first):
+-'  1  0  ~/plays/roles/my-test/handlers/main.yml
+|4,39,1,0,1605469810,"~/plays/roles/my-test/handlers/main.yml"
+-'  12  0  ~/plays/roles/my-test
+|4,39,12,0,1605469806,"~/plays/roles/my-test"
+-'  10  0  ~/plays/roles
+|4,39,10,0,1605469802,"~/plays/roles"
+-'  6  2  ~/plays/apache.yml
+|4,39,6,2,1605469779,"~/plays/apache.yml"
+-'  6  2  ~/plays/apache.yml
+|4,39,6,2,1605469779,"~/plays/apache.yml"
+-'  1  0  ~/plays/apache.yml
+|4,39,1,0,1605469772,"~/plays/apache.yml"
+-'  1  0  ~/plays/apache.yml
+|4,39,1,0,1605469772,"~/plays/apache.yml"
+-'  1  0  ~/.git/info/exclude
+|4,39,1,0,1605469410,"~/.git/info/exclude"
+-'  1  0  ~/.git/info/exclude
+|4,39,1,0,1605469410,"~/.git/info/exclude"
+-'  1  0  ~/.git/info/exclude
+|4,39,1,0,1605469410,"~/.git/info/exclude"
 -'  1  0  ~/.git/info/exclude
 |4,39,1,0,1605469410,"~/.git/info/exclude"
 -'  52  6  ~/plays/users.yml
 |4,39,52,6,1605469321,"~/plays/users.yml"
 -'  52  6  ~/plays/users.yml
 |4,39,52,6,1605469321,"~/plays/users.yml"
+-'  52  6  ~/plays/users.yml
+|4,39,52,6,1605469321,"~/plays/users.yml"
+-'  52  6  ~/plays/users.yml
+|4,39,52,6,1605469321,"~/plays/users.yml"
+-'  52  6  ~/plays/users.yml
+|4,39,52,6,1605469321,"~/plays/users.yml"
+-'  52  6  ~/plays/users.yml
+|4,39,52,6,1605469321,"~/plays/users.yml"
+-'  52  6  ~/plays/users.yml
+|4,39,52,6,1605469321,"~/plays/users.yml"
+-'  52  6  ~/plays/users.yml
+|4,39,52,6,1605469321,"~/plays/users.yml"
 -'  16  29  ~/plays/all.yml
 |4,39,16,29,1605468654,"~/plays/all.yml"
 -'  16  29  ~/plays/all.yml
@@ -125,6 +157,54 @@ $
 |4,39,16,29,1605468654,"~/plays/all.yml"
 -'  16  29  ~/plays/all.yml
 |4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  16  29  ~/plays/all.yml
+|4,39,16,29,1605468654,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
+-'  1  0  ~/plays/all.yml
+|4,39,1,0,1605468397,"~/plays/all.yml"
 -'  1  0  ~/plays/all.yml
 |4,39,1,0,1605468397,"~/plays/all.yml"
 -'  1  0  ~/plays/all.yml
@@ -149,6 +229,54 @@ $
 |4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
 -'  10  4  ~/plays/vars/user_list.yml
 |4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
+-'  10  4  ~/plays/vars/user_list.yml
+|4,39,10,4,1605468277,"~/plays/vars/user_list.yml"
 -'  11  4  ~/plays/vars/user_list.yml
 |4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
 -'  11  4  ~/plays/vars/user_list.yml
@@ -165,154 +293,36 @@ $
 |4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
 -'  11  4  ~/plays/vars/user_list.yml
 |4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
--'  12  12  ~/plays/vars/user_list.yml
-|4,39,12,12,1605468142,"~/plays/vars/user_list.yml"
--'  12  12  ~/plays/vars/user_list.yml
-|4,39,12,12,1605468142,"~/plays/vars/user_list.yml"
--'  12  12  ~/plays/vars/user_list.yml
-|4,39,12,12,1605468142,"~/plays/vars/user_list.yml"
--'  12  12  ~/plays/vars/user_list.yml
-|4,39,12,12,1605468142,"~/plays/vars/user_list.yml"
--'  12  12  ~/plays/vars/user_list.yml
-|4,39,12,12,1605468142,"~/plays/vars/user_list.yml"
--'  12  12  ~/plays/vars/user_list.yml
-|4,39,12,12,1605468142,"~/plays/vars/user_list.yml"
--'  12  12  ~/plays/vars/user_list.yml
-|4,39,12,12,1605468142,"~/plays/vars/user_list.yml"
--'  12  12  ~/plays/vars/user_list.yml
-|4,39,12,12,1605468142,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  1  0  ~/plays/vars/user_list.yml
-|4,39,1,0,1605468113,"~/plays/vars/user_list.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  52  23  ~/plays/users.yml
-|4,39,52,23,1605468082,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  10  12  ~/plays/users.yml
-|4,39,10,12,1605467975,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
--'  27  12  ~/plays/users.yml
-|4,39,27,12,1605467903,"~/plays/users.yml"
+-'  11  4  ~/plays/vars/user_list.yml
+|4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
+-'  11  4  ~/plays/vars/user_list.yml
+|4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
+-'  11  4  ~/plays/vars/user_list.yml
+|4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
+-'  11  4  ~/plays/vars/user_list.yml
+|4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
+-'  11  4  ~/plays/vars/user_list.yml
+|4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
+-'  11  4  ~/plays/vars/user_list.yml
+|4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
+-'  11  4  ~/plays/vars/user_list.yml
+|4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
+-'  11  4  ~/plays/vars/user_list.yml
+|4,39,11,4,1605468274,"~/plays/vars/user_list.yml"
 
 # History of marks within files (newest to oldest):
+
+> ~/plays/roles/my-test/handlers/main.yml
+	*	1605469809	0
+	"	1	0
+
+> ~/plays/apache.yml
+	*	1605469779	0
+	"	6	2
+	^	1	51
+	.	7	0
+	+	1	50
+	+	7	0
 
 > ~/.git/info/exclude
 	*	1605469409	0
@@ -488,13 +498,6 @@ $
 	.	2	64
 	+	2	64
 
-> ~/plays/apache.yml
-	*	1605456341	0
-	"	1	50
-	^	1	51
-	.	1	50
-	+	1	50
-
 > ~/plays/mysql.yml
 	*	1605456268	0
 	"	2	16
@@ -526,10 +529,3 @@ $
 > ~/plays/re
 	*	1605456206	0
 	"	1	0
-
-> ~/plays/motd.yml
-	*	1605456086	0
-	"	2	28
-	^	2	29
-	.	2	28
-	+	2	28
