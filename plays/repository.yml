@@ -1,0 +1,22 @@
+---
+- name: Task 8 - Repos
+  hosts: all
+  become: true
+  tasks:
+    - name: Add repositories 
+      yum_repository:
+        name: BaseOS
+        description: This is the main repo file
+        file: rpms 
+        enabled: true
+        baseurl: http://repo.ansi.example.com/BaseOS
+        gpgcheck: no
+
+    - name: Add repositories 
+      yum_repository:
+        name: AppStream
+        description: This is the main repo file
+        file: rpms
+        enabled: true
+        baseurl: http://repo.ansi.example.com/AppStream
+        gpgcheck: no

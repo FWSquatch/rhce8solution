@@ -1,0 +1,16 @@
+---
+- import_playbook: motd.yml
+- import_playbook: sshd.yml
+- import_playbook: users.yml
+- import_playbook: regular_tasks.yml
+- import_playbook: repository.yml
+- import_playbook: mysql.yml
+- import_playbook: apache.yml
+- import_playbook: haproxy.yml
+- import_playbook: selinux.yml
+- import_playbook: sysctl.yml
+- import_playbook: archive.yml
+- import_playbook: facts.yml
+- import_playbook: packages.yml
+- import_playbook: target.yml
+- import_playbook: server_list.yml

@@ -1,0 +1,19 @@
+---
+- name: Task 11 - Download Roles from Ansible Galaxy and Use Them
+  become: true
+  hosts: proxy
+  roles:
+    - geerlingguy.haproxy
+  tasks:
+    - name: Install firewalld
+      yum:
+        name: firewalld
+        state: latest
+
+    - name: Allow traffic
+      firewalld:
+        service: http
+        state: enabled
+        permanent: true
+        immediate: true
+    

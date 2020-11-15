@@ -1,0 +1,14 @@
+---
+- name: Task 17 - Services
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Set target
+      file:
+        src: /usr/lib/systemd/system/multi-user.target
+        dest: /etc/systemd/system/default.target
+        owner: root
+        group: root
+        mode: "0777"
+        state: link
+

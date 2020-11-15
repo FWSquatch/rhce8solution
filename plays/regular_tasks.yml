@@ -1,0 +1,13 @@
+---
+- name: Task 7 - Scheduled Tasks
+  hosts: proxy
+  become: true
+  tasks:
+    - name: Create a root cronjob
+      cron:
+        name: "Append date output"
+        minute: "0"
+        job: "/bin/date >> /var/log/time.log"
+        user: root
+
+

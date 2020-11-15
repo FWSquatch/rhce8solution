@@ -1,0 +1,24 @@
+---
+- name: Task 16A - Software Packages
+  hosts: proxy
+  become: true
+  tasks:
+    - name: Install packages on proxy
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - tcpdump
+        - mailx
+- name: Task 16B - Software Packages
+  hosts: database
+  become: true
+  tasks:
+    - name: Install packages on database
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - lsof
+        - mailx
+

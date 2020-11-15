@@ -1,0 +1,52 @@
+---
+- name: Task 6 - Users and Groups
+  hosts: all 
+  vars_files: 
+    - vars/user_list.yml
+    - secret.yml
+
+  become: true
+  tasks:
+    - name: Webservers
+      block:
+        - name: Create users in webservers
+          user: 
+            name: "{{ item.username }}"
+            uid: "{{ item.uid }}"
+            groups: wheel
+            append: true
+            shell: /bin/bash
+            password: "{{ user_password | password_hash( 'sha512', 'mysalt') }}"
+
+          loop: "{{ users }}"
+
+        - name: Copy public keys
+          authorized_key:
+            user: "{{ item.username }}"
+            state: present
+            key: "{{ lookup('file', '/home/automation/.ssh/id_rsa.pub') }}"
+          loop: "{{ users }}"
+
+      when: "item.uid//1000 == 1 and inventory_hostname in groups.webservers"
+
+    - name: Database
+      block:
+        - name: Create users in database
+          user: 
+            name: "{{ item.username }}"
+            uid: "{{ item.uid }}"
+            groups: wheel
+            append: true
+            shell: /bin/bash
+            password: "{{ user_password | password_hash( 'sha512', 'mysalt') }}"
+
+          loop: "{{ users }}"
+
+        - name: Copy public keys
+          authorized_key:
+            user: "{{ item.username }}"
+            state: present
+            key: "{{ lookup('file', '/home/automation/.ssh/id_rsa.pub') }}"
+          loop: "{{ users }}"
+
+      when: "item.uid//1000 == 2 and inventory_hostname in groups.database"

@@ -1,0 +1,16 @@
+---
+- name: Task 13 - Use Conditionals to Control Play Execution
+  hosts: all
+  become: true
+  tasks:
+    - name: Beefy Bois
+      sysctl:
+        name: vm.swappiness
+        value: "10"
+        state: present
+      when: ansible_memtotal_mb >= 512
+
+    - name: Wimpy Bois
+      debug:
+        msg: "Server memory is less than 512MB"
+      when: ansible_memtotal_mb < 512
