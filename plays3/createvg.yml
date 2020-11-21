@@ -1,0 +1,35 @@
+---
+- name: Task 11 Managing Storage
+  hosts: node4
+  become: true
+  tasks:
+    - name: Create partition 1
+      parted:
+        device: /dev/sdb
+        number: 1
+        state: present
+        part_end: 1GiB
+
+    - name: Create Partition 2
+      parted:
+        device: /dev/sdb
+        number: 2
+        state: present
+        part_start: 1GiB
+        part_end: 4000MiB
+
+    - name: 
+      lvg:
+        vg: vgdata
+        pvs: [ /dev/sdb1, /dev/sdb2 ]
+
+
+    - name: Create a logical volume of 512m
+      lvol:
+        vg: vgdata
+        lv: lvdata
+        size: 2000M
+      when: ansible_devices.sdb is defined
+
+ 
+

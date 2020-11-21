@@ -1,0 +1,23 @@
+---
+- name: Task 9 MOTD
+  hosts: all
+  become: true
+  tasks:
+    - name: Set ssh to use Banner
+      lineinfile:
+        regexp: Banner
+        line: Banner /etc/motd
+        path: /etc/ssh/sshd_config
+      notify: restart_sshd
+
+    - name: Set up fancy MOTD
+      template:
+        src: motd.j2
+        dest: /etc/motd
+        mode: "0644"
+
+  handlers:
+    - name: restart_sshd
+      service:
+        name: sshd
+        state: restarted

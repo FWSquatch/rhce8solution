@@ -1,0 +1,7 @@
+Welcome to {{ ansible_hostname }}!
+System memory: {{ ansible_memtotal_mb }}
+Processer count: {{ ansible_processor_count }}
+Primary disk size:{{ ansible_devices['dm-0']['size'] }}
+{% if 'dm-6' in ansible_devices %}Secondary disk size:{{ ansible_devices['dm-1']['size'] }}
+{% else %}Secondary disk size: NOT AVAILABLE
+{% endif %}

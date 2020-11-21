@@ -1,0 +1,9 @@
+---
+- name: ugh
+  become: true
+  hosts: node2
+  vars_files: secret
+  tasks:
+    - name: debug
+      debug:
+        msg: "{{ secure_pass }}"

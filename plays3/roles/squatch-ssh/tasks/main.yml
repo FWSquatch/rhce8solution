@@ -1,0 +1,19 @@
+---
+# tasks file for squatch-ssh
+- name: Copy ssh template
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+  notify: restart_sshd
+
+- name: Firewall stuff
+  yum:
+    name: firewalld
+    state: latest
+
+- name: Open up firewall port
+  firewalld:
+    port: "{{ ssh_port }}/tcp"
+    state: enabled
+    permanent: true
+    immediate: true

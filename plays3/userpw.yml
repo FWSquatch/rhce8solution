@@ -1,0 +1,6 @@
+---
+- name: Create User and PW
+  hosts: all
+  become: true
+  tasks:
+    - name: 

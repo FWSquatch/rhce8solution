@@ -1,0 +1,5 @@
+---
+- name: Web Stuff
+  import_playbook: server.yml
+- name: Client Stuf
+  import_playbook: client.yml

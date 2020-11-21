@@ -1,0 +1,13 @@
+---
+- name: Web Client setup
+  hosts: webclients
+  become: true
+  tasks:
+    - name: install pacakges
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - wget
+        - http://mirror.centos.org/centos/8/PowerTools/x86_64/os/Packages/elinks-0.12-0.58.pre6.el8.x86_64.rpm
+        - curl

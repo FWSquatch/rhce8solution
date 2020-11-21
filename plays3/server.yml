@@ -1,0 +1,67 @@
+---
+- name: Task 7 Setup Web stuff
+  hosts: node4
+  become: true
+  vars:
+    web_package: httpd
+    web_service: httpd
+    web_config_file: /etc/httpd/conf/httpd.conf
+    firewall_service: http
+
+  tasks:
+    - name: Install httpd
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - "{{ web_service }}"
+        - firewalld
+  
+    - name: Start 
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - "{{ web_service }}"
+        - firewalld
+
+    - name: FW Rules
+      firewalld:
+        service: "{{ item }}"
+        state: enabled
+        immediate: true
+        permanent: true
+      loop:
+        - "{{ firewall_service }}"
+        - ssh
+
+    - name: Create webroot dir
+      file:
+        path: "/var/www/{{ ansible_hostname }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Index file
+      copy:
+        content: |
+          <h1>O YEAH {{ ansible_hostname }}</h1>
+          <p>You are hanging out at {{ ansible_fqdn }}</p>
+        dest: "/var/www/{{ ansible_hostname }}/index.html"
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Set up vhost file
+      template:
+        src: httpd.conf.j2
+        dest: "{{ web_config_file }}"
+      notify: restart_httpd
+
+  handlers:
+    - name: restart_httpd
+      service:
+        name: httpd
+        state: restarted

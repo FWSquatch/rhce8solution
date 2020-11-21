@@ -1,0 +1,13 @@
+---
+- name: Task 8 Installing roles from galaxy
+  hosts: node4
+  become: true
+  tasks:
+    - name: redis
+      import_role:
+        name: geerlingguy.redis
+
+
+    - name: nginx 
+      import_role:
+        name: geerlingguy.nginx
