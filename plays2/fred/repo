@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#ansible all -m lineinfile -a "regexp=^enabled line="enabled=0" dest=/etc/yum.repos.d/redhat.repo" -k -K -b
+#ansible all -m lineinfile -a "regexp=^enabled line="enabled=0" dest=/etc/yum.repos.d/ipa.repo" -k -K -b
+ansible all -m copy -a 'content="[BaseOS]\nbaseurl=http://repo.BaseOS\nenabled=1" dest=/etc/yum.repos.d/BaseOS.repo' -k -K -b
+ansible all -m copy -a 'content="[AppStream]\nbaseurl=http://repo.AppStream\nenabled=1" dest=/etc/yum.repos.d/AppStream.repo' -k -K -b

@@ -1,0 +1,27 @@
+---
+- name: Task 4 - Configuring Managed Hosts
+  hosts: servers
+  become: true
+  tasks:
+    - name: Install Python
+      yum:
+        name: python3
+        state: latest
+
+    - name: Create ansible1 user
+      user:
+        name: ansible1
+        groups: wheel
+        append: true
+        password: "{{ 'mypassword' | password_hash('sha512', 'mysecretsalt') }}"
+
+    - name: Create sudo config for ansible1
+      copy:
+        content: "ansible1 ALL=(ALL) NOPASSWD:ALL"
+        dest: /etc/sudoers.d/ansible1
+
+- name: Check Connectivity to all hosts
+  hosts: all
+  tasks:
+    - name: Check connectivity
+      ping:

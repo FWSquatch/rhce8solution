@@ -1,0 +1,16 @@
+[repo_server]
+repo
+
+[test]
+node1
+
+[dev]
+node2
+
+[prod]
+node3
+node4
+
+[okc:children]
+dev
+prod

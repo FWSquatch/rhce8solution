@@ -1,0 +1,13 @@
+---
+- name: Test
+  hosts: test
+  vars:
+    ssh_port: 2022
+    permit_root_login: no
+    allowed_users: fred
+  become: true
+  tasks:
+    - name: sdf
+      debug:
+        #msg: "{{ansible_facts.default_ipv4.address[1] }}"
+        msg: "{{ ansible_facts.eth1.ipv4.address }}"

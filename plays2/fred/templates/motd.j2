@@ -1,0 +1,3 @@
+{% if ansible_host in groups['prod'] %}Welcome to HAProxy! {% endif%}
+{% if ansible_host in groups['test'] %}Welcome to Test server! {% endif%}
+{% if ansible_host in groups['dev'] %}Welcome to Dev server! {% endif%}

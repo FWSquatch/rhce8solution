@@ -1,0 +1,12 @@
+---
+- name: Task 3 - File Content
+  hosts: all
+  become: true
+  tasks:
+    - name: Write to file
+      template:
+        src: templates/motd.j2
+        dest: /etc/motd
+
+    - name: Check motd
+      command: "cat /etc/motd"

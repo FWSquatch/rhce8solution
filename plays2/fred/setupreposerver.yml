@@ -1,0 +1,34 @@
+---
+- name: Task 2 - Set up Repo Server
+  hosts: repo
+  become: true
+  tasks:
+    - name: Disable Firewall
+      service:
+        name: firewalld
+        state: stopped
+        enabled: false
+
+    - name: Install vsftpd
+      yum:
+        name: vsftpd
+        state: latest
+
+    - name: Start up vsftpd service
+      service:
+        name: vsftpd
+        state: started
+        enabled: true
+
+    - name: New vsftpd config
+      lineinfile:
+        path: /etc/vsftpd/vsftpd.conf
+        regexp: ^anonymous_enable
+        line: anonymous_enable=YES
+      notify: restart_vsftpd
+
+  handlers:
+    - name: restart_vsftpd
+      service:
+        name: vsftpd
+        state: restarted

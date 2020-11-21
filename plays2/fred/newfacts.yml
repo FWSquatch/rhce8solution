@@ -1,0 +1,22 @@
+---
+- name: Install new facts
+  hosts: all
+  become: true
+  tasks:
+    - name: Create fact dir
+      file:
+        path: /etc/ansible/facts.d
+        state: directory
+
+    - name: Install facts
+      copy:
+        content: |
+          [oyeah]
+          home = luther
+          work = choctaw
+        dest: /etc/ansible/facts.d/custom.fact
+
+    - name: Check facts
+      debug:
+        msg: "{{ ansible_facts.ansible_local['custom']['oyeah']['work'] }}"
+      when: ansible_facts.fqdn == 'node3.ansi.example.com'

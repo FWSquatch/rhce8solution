@@ -1,0 +1,6 @@
+---
+# vars file for my-ssh
+ssh_port: 2022
+allowed_users:
+  - ansible
+permit_root_login: no
