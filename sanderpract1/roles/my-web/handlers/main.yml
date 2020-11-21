@@ -1,0 +1,6 @@
+---
+# handlers file for my-web
+- name: restart_httpd                                                                                        
+  service:
+    name: "{{ web_server }}"
+    state: restarted

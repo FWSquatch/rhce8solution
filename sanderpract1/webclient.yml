@@ -1,0 +1,13 @@
+---
+- name: Web Client Setup
+  hosts: webclients
+  become: true
+  vars:
+    client_package: curl
+  tasks:
+    - name: Install client package
+      yum:
+        name: "{{ client_package }}"
+        state: present
+
+

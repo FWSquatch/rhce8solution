@@ -1,0 +1,58 @@
+---
+- name: Last Playbook
+  hosts: webservers
+  become: true
+  tasks:
+    - name: install Role
+      import_role:
+        name: my-web
+
+    - name: Setup storage
+      parted:
+        device: /dev/sdb
+        number: 1
+        state: present
+        part_start: 1MiB
+        part_end: 100%
+
+    - name: Create mount point
+      file:
+        path: /web
+        state: directory
+        setype: httpd_sys_content_t
+
+    - name: Create FS
+      filesystem:
+        fstype: ext4
+        dev: /dev/sdb1
+        force: true
+
+    - name: Mount the drive
+      mount:
+        path: /web
+        src: /dev/sdb1
+        fstype: ext4
+        state: present
+ 
+    - name: Create index
+      copy:
+        content: |
+          <h1>Welcome to my custom server!</h1>
+          <h2>We have moved {{ ansible_fqdn }} to a new directory.</h2>
+        dest: /web/index.html
+        owner: root
+        group: root
+        mode: "0644"
+        setype: httpd_sys_content_t
+
+    - name: Change the webroot directory
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: /var/www/html
+        replace: /web
+      notify: restart_webserver
+  handlers:
+    - name: restart_webserver
+      service:
+        name: httpd
+        state: restarted

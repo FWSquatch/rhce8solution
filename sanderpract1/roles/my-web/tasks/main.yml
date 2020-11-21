@@ -1,0 +1,32 @@
+---
+- name: Install httpd
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - "{{ web_server }}"
+    - firewalld
+
+- name: Set up services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - "{{ web_server }}"
+    - firewalld
+
+- name: Set up Firewall Rules
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  loop:
+    - http
+    - ssh
+- name: Copy over config
+  template:
+    src: httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+  notify: restart_httpd

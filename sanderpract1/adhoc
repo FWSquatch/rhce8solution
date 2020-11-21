@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ansible all -m user -a "user=lisa state=present groups=wheel append=true password=$6$mysecretsalt$3.1aQi8DodZ22ZCbgneUNwbK7zVVNRniMnT9X42QAciGg0vesJzHfS6bJHCxhyd4OcPDcuFDxnd0R6KHw9sDr/" -b -k -K -u vagrant
+
+ansible all -m copy -a "content='lisa ALL=(ALL) NOPASSWD:ALL' dest=/etc/sudoers.d/lisa mode=0400" -k -K -b -u vagrant
+
+ansible all -m authorized_key -a "user=lisa state=present key={{ lookup('file', '/home/lisa/.ssh/id_rsa.pub') }}" -k -K -b -u vagrant
+

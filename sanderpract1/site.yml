@@ -1,0 +1,5 @@
+---
+- name: Both playbooks
+  import_playbook: webserver.yml
+- name: Both playbooks
+  import_playbook: webclient.yml
