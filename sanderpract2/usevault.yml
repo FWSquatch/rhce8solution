@@ -1,0 +1,16 @@
+---
+- name: Task 4 vault
+  hosts: all
+  become: true
+  vars_files: cloudpass.yml
+  tasks:
+    - name: create cleartext
+      copy:
+        content: |
+          CLOUDPASS={{ CLOUDPASS }}
+          CLOUDID={{ CLOUDID }}
+        dest: /root/cloudcreds.txt
+
+    - name: shout it out
+      debug:
+        msg: "{{ CLOUDPASS }}"

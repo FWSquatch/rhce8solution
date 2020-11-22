@@ -1,0 +1,27 @@
+---
+- name: Task 2 - Setup Repo Server
+  hosts: repo_server
+  become: true
+  tasks:
+    - name: Set up vsftpd
+      yum:
+        name: vsftpd
+        state: present
+
+    - name: Run services
+      service:
+        name: vsftpd
+        state: started
+        enabled: true
+
+    - name: Fix config file
+      template:
+        src: vsftpd.conf.j2
+        dest: /etc/vsftpd/vsftpd.conf
+      notify: restart_vsftpd
+
+  handlers:
+    - name: restart_vsftpd
+      service:
+        name: vsftpd
+        state: restarted

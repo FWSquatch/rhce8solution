@@ -1,0 +1,24 @@
+---
+- name: Task 3 Repos
+  hosts: all
+  become: true
+  vars:
+    repo_file: /etc/yum.repos.d/ipa.repo
+  tasks:
+    - name: disable repos
+      replace:
+        path: "{{ repo_file }}"
+        regexp: ^Enabled=1
+        replace: Enabled=0
+      
+    - name: enable repos
+      copy:
+        content: |
+          [BaseOS]
+          baseurl="http://repo.ansi.example.com/BaseOS"
+          enabled=1
+
+          [AppStream]
+          baseurl="http://repo.ansi.example.com/AppStream"
+          enabled=1
+        dest: /etc/yum.repos.d/my-repos.repo

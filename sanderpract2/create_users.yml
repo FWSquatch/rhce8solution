@@ -1,0 +1,20 @@
+---
+- name: Task 7 oyeah
+  hosts: all
+  become: true
+  vars_files: users_pass.yml
+  tasks:
+    - name: Create groups
+      group:
+        name: "{{ item.department }}"
+        state: present
+      loop: "{{ users }}"
+
+    - name: Create Profs
+      user:
+        name: "{{ item.name }}"
+        password: "{{ item.password | password_hash('sha256') }}"
+        groups: "{{ item.department }}"
+        append: true
+      loop: "{{ users }}"
+      when: ansible_hostname in groups['prod'] 

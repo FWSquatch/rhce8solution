@@ -1,0 +1,18 @@
+---
+- name: Pack Facts
+  hosts: all
+  become: true
+  tasks:
+    - name: ugh
+      package_facts:
+        manager: auto
+      register: oogah
+
+    - name: fact file
+      template:
+        src: packages.j2
+        dest: /root/packages.txt
+
+    - name: report
+      debug:
+       msg: "{{ oogah['ansible_facts']['packages']['acl'][0]['version'] }}"

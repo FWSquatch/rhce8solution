@@ -1,0 +1,11 @@
+---
+- name: test
+  hosts: node1
+  become: true
+  roles:
+    - my.apache
+  tasks:
+    - name: Check for HDD
+      debug:
+        msg: "{{ ansible_fqdn }}"
+      when: ansible_devices['sdb'] is defined

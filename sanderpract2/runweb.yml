@@ -1,0 +1,12 @@
+---
+- name: test
+  hosts: prod
+  become: true
+  roles:
+    - my.apache
+  pre_tasks:
+    - name: Firewall Running?
+      service:
+        name: firewalld
+        state: started
+        enabled: true

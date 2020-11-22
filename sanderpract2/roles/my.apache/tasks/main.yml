@@ -1,0 +1,43 @@
+---
+# tasks file for my.apache
+
+- name: Install Apached and firewalld
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop: 
+     - httpd
+     - firewalld
+  
+- name: Fire up services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - httpd
+    - firewalld
+ 
+- name: Make firewall rules
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    immediate: true
+    permanent: true
+  loop:
+    - http
+    - https
+    - ssh
+
+- name: Create Index file
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Move image
+  copy:
+    src: obey.png
+    dest: /var/www/html/obey.png

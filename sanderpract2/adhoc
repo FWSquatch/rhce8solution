@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#ansible all -m user -a 'user=ansible groups=wheel append=true password="$6$salt$TXGPxOwUfTSW0I8V9dD9QXd4BCkZrvltTEmMoayMhN4MePeBDuYpasD6QdwDwKRi5xyDzI5ihtXMaGufO5jrW/"' -k -K -b -u vagrant
+
+ansible all -m authorized_key -a "user=vagrant state=present key={{ lookup('file', 'id_rsa.pub') }}" -k -K -b -u ansible
+
+#ansible all -m copy -a "content='ansible ALL=(ALL) NOPASSWD:ALL' dest=/etc/sudoers.d/ansible" -k -K -b -u vagrant

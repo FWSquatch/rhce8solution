@@ -1,0 +1,42 @@
+---
+- name: Task 2 partitions
+  hosts: all
+  become: true
+  tasks:
+    - name: Check for HDD
+      block:
+        - name: HDD
+          parted:
+            device: /dev/sdb
+            number: 1
+            flags: [ lvm ]
+            state: present
+            part_end: 100%
+        - name: Set up vg   
+          lvg:
+            vg: vgdata
+            pvs: /dev/sdb1
+            pesize: 8MiB
+
+        - name: Logical volume
+          lvol:
+            vg: vgdata
+            lv: lvdata
+            size: 1G
+
+        - name: Setup filesystem
+          filesystem:
+            fstype: ext3
+            dev: /dev/mapper/vgdata-lvdata
+        
+        - name: Mount and bind a volume
+          mount:
+            path: /data
+            src: /dev/mapper/vgdata-lvdata
+            fstype: ext3
+            state: mounted
+
+        - name: oyeah
+          debug:
+            msg: oyeah
+      when: ansible_devices['sdc'] is defined

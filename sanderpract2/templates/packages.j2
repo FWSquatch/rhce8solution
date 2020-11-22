@@ -1,0 +1,3 @@
+{% for pack in ansible_facts['packages']  %}
+{{ pack }}={{ oogah['ansible_facts']['packages'][pack][0]['version'] }}
+{% endfor %}

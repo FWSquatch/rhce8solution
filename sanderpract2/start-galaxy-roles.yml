@@ -1,0 +1,11 @@
+---
+- name: Roles
+  hosts: prod
+  become: true
+  roles:
+    - geerlingguy.docker
+    - geerlingguy.nginx
+  tasks:
+    - name: ooga-booga
+      debug:
+        msg: oyeah
