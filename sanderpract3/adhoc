@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#ansible all -m user -a "name=fred groups=wheel append=true password={{ 'devops' | password_hash('sha512', 'mysecretsalt') }}" -k -K -b -u vagrant
+
+#ansible all -m authorized_key -a "user=fred state=present key={{ lookup('file', '/home/fred/.ssh/id_rsa.pub') }} " -k -K -b -u vagrant
+
+#ansible all -m copy -a "content='fred ALL=(ALL) NOPASSWD:ALL' dest=/etc/sudoers.d/fred" -k -K -b -u vagrant
+
+ansible all -m replace -a "path=/etc/yum.repos.d/ipa.repo regexp='^enabled=1' replace='enabled=0'" -k -K -b
+
+ansible all -m copy -a "content='[BaseOS]\nenabled=1\nbaseurl=http://repo/BaseOS\n\n[AppStream]\nenabled=1\nbaseurl=http://repo/AppStream' dest=/etc/yum.repos.d/exam.repo" -b -K -k

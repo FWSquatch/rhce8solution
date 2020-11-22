@@ -1,0 +1,56 @@
+---
+- name: Task 3 sysreport
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Generate hwtemplate
+      copy:
+        content: |
+          NAME=
+          IPADDRESS=
+          TOTAL_MEMORY=
+          NIC_NAME=
+          SECOND_NIC_NAME=
+        dest: /home/fred/hwtemplate.txt
+
+- name: Task 3 remote
+  hosts: node1
+  become: true
+  tasks:
+    - name: Copy report
+      copy:
+        src: hwtemplate.txt
+        dest: /root/hwtemplate.txt
+
+    - name: Replace line1
+      lineinfile:
+        path: /root/hwtemplate.txt
+        regexp: ^NAME=
+        line: "NAME={{ ansible_hostname }}"
+
+    - name: Replace line2
+      lineinfile:
+        path: /root/hwtemplate.txt
+        regexp: ^IPADDRESS=
+        line: "IPADDRESS={{ ansible_eth1['ipv4']['address'] }}"
+
+    - name: Replace line3
+      lineinfile:
+        path: /root/hwtemplate.txt
+        regexp: ^TOTAL_MEMORY=
+        line: "TOTAL_MEMORY={{ ansible_memtotal_mb }}"
+
+    - name: Replace line4
+      lineinfile:
+        path: /root/hwtemplate.txt
+        regexp: ^NIC_NAME=
+        line: "NIC_NAME={{ hostvars['node1']['ansible_interfaces'][0] }}"
+
+
+    - name: Replace line5
+      lineinfile:
+        path: /root/hwtemplate.txt
+        regexp: ^SECOND_NIC_NAME=
+        line: "SECOND_NIC_NAME={{ hostvars['node1']['ansible_interfaces'][2] }}"
+      when: ansible_interfaces[5] is defined
+

@@ -1,0 +1,23 @@
+---
+- name: Task 1 Install software
+  hosts: all
+  become: true
+  tasks:
+    - name: Install perl and php
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - perl
+        - php
+
+    - name: Install on prod
+      yum:
+        name: "{{ item}}" 
+        state: latest
+      loop:
+        - "@Virtualization Host"
+        - "*"
+      when: ansible_hostname in groups['prod']
+
+

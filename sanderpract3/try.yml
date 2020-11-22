@@ -1,0 +1,8 @@
+---
+- name: try
+  hosts: node1
+  become: true
+  tasks:
+    - name: Debug
+      debug:
+        msg: "{{ hostvars['node1']['ansible_interfaces'][1] }} and {{ hostvars['node1']['ansible_interfaces'][2] }}"
