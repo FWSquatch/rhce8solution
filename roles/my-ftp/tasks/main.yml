@@ -1,0 +1,41 @@
+---
+# tasks file for my-ftp
+- name: Create user ftpee
+  user:
+    name: "{{ ftp_user }}"
+    state: present
+    password: "{{ ftp_pw | password_hash('sha512', 'mysecretsalt') }}"
+
+- name: Install vsftpd
+  yum:
+    name: vsftpd
+    state: latest
+
+- name: Start vsftpd
+  service:
+    name: vsftpd
+    state: started
+    enabled: true
+
+- name: Change Banner
+  lineinfile:
+    path: /etc/vsftpd/vsftpd.conf
+    regexp: ^#ftpd_banner=
+    line: "ftpd_banner=Welcome to {{ ansible_hostname }} FTP service"
+    state: present
+  notify: restart_vsftpd
+
+- name: Change Port
+  lineinfile:
+    path: /etc/vsftpd/vsftpd.conf
+    regexp: ^listen_port
+    line: "listen_port={{ ftp_port }}"
+    state: present
+  notify: restart_vsftpd
+
+- name: Create FW Rule
+  firewalld:
+    port: "{{ ftp_port }}/tcp"
+    state: enabled
+    immediate: true
+    permanent: true

@@ -1,0 +1,123 @@
+---
+- name: Task 4 Install Packages
+  hosts: all
+  become: true
+  vars:
+    dev_pack:
+      - git
+      - httpd
+      - mariadb-server
+      - mariadb
+    dev_svc:
+      - httpd
+      - mariadb
+    dev_fw:
+      - http
+      - https
+      - mysql
+    db_pack:
+      - mariadb-server
+    db_svc:
+      - mariadb
+    db_fw:
+      - mysql
+    webservers_pack:
+      - httpd
+      - vsftpd
+    webservers_svc:
+      - httpd
+      - vsftpd
+    webservers_fw:
+      - ftp
+      - http
+      - https
+    nyc_pack:
+      - firewalld
+  tasks:
+    - name: Install dev
+      block:
+        - name: packs
+          yum:
+            name: "{{ item }}"
+            state: latest
+          loop: "{{ dev_pack }}"
+        - name: svc
+          service:
+            name: "{{ item }}"
+            state: started
+            enabled: true
+          loop: "{{ dev_svc }}"
+        - name: fw
+          firewalld:
+            service: "{{ item }}"
+            state: enabled
+            permanent: true
+            immediate: true
+          loop: "{{ dev_fw }}"
+      when: ansible_hostname in groups['dev']
+
+    - name: Install db
+      block:
+        - name: packs
+          yum:
+            name: "{{ item }}"
+            state: latest
+          loop: "{{ db_pack }}"
+        - name: svc
+          service:
+            name: "{{ item }}"
+            state: started
+            enabled: true
+          loop: "{{ db_svc }}"
+        - name: fw
+          firewalld:
+            service: "{{ item }}"
+            state: enabled
+            permanent: true
+            immediate: true
+          loop: "{{ db_fw }}"
+      when: ansible_hostname in groups['db']
+
+    - name: Install webservers
+      block:
+        - name: packs
+          yum:
+            name: "{{ item }}"
+            state: latest
+          loop: "{{ webservers_pack }}"
+        - name: svc
+          service:
+            name: "{{ item }}"
+            state: started
+            enabled: true
+          loop: "{{ webservers_svc}}"
+        - name: fw
+          firewalld:
+            service: "{{ item }}"
+            state: enabled
+            permanent: true
+            immediate: true
+          loop: "{{ webservers_fw }}"
+      when: ansible_hostname in groups['webservers']
+
+    - name: Install nyc
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop: "{{ nyc_pack }}"
+      when: ansible_hostname in groups['nyc']
+
+    - name: Start firewalld
+      service:
+        name: firewalld
+        state: started
+        enabled: true
+
+- name: Check Connectivity
+  hosts: localhost
+  tasks:
+    - name: Hit webpage
+      uri:
+        url: "http://{{ item }}.ansi.example.com"
+        status_code: [200,403]
+      loop: "{{ groups['webservers'] }}"

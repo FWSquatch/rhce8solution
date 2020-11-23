@@ -1,0 +1,65 @@
+---
+- name: Task 6
+  hosts: all
+  become: true
+  tasks:
+    - name: Create mount points
+      file:
+        path: "/{{ ansible_hostname }}-backup"
+        state: directory
+
+    - name: check for third HDD
+      mount:
+        src: /dev/sdc
+        path: "/{{ ansible_hostname }}-backup"
+        fstype: ext4
+        state: mounted
+      when: ansible_devices['sdc'] is defined
+    
+    - name: No third HDD
+      mount:
+        src: /dev/sdb
+        path: "/{{ ansible_hostname }}-backup"
+        fstype: ext4
+        state: mounted
+      when: ansible_devices['sdc'] is not defined
+
+    - name: Setup LVM
+      block:
+        - name: Create mount point
+          file:
+            path: /logical
+            state: directory
+
+        - name: Create a new primary partition for LVM
+          parted:
+            device: /dev/sdb
+            number: 1
+            flags: [ lvm ]
+            state: present
+            part_end: 100%
+
+        - name: Setup VG
+          lvg:
+            vg: wrestlemania
+            pvs: /dev/sdb1
+
+        - name: Set up lvol
+          lvol:
+             vg: wrestlemania
+             lv: num01
+             size: 100%FREE
+             state: present
+        
+        - name: Make FS
+          filesystem:
+            dev: /dev/mapper/wrestlemania-num01
+            fstype: ext4
+        - name: Mount the LVM
+          mount:
+            src: /dev/mapper/wrestlemania-num01
+            path: /logical
+            fstype: ext4
+            state: mounted
+      when: ansible_hostname in groups['dev']
+      

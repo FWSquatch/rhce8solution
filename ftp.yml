@@ -1,0 +1,13 @@
+---
+- name: Task 7
+  hosts: db
+  vars_files: ftp_secrets
+#  vars:
+#    ftp_port: 2021
+  become: true
+  roles:
+    - my-ftp
+  tasks:
+    - name: What?
+      debug:
+        msg: oyeah

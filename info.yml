@@ -1,0 +1,10 @@
+---
+- name: Task 8 Info page
+  hosts: all
+  become: true
+  tasks:
+    - name: Make file
+      template:
+        src: info.txt.j2
+        dest: /var/www/html/info.txt
+

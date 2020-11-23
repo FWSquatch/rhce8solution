@@ -1,0 +1,5 @@
+{% if ansible_hostname in hostvars[ansible_hostname]['groups']['nyc'] %}----- THIS IS A PRODUCTION SERVER!! -----{% endif %} 
+I am: {{ ansible_hostname }}
+My ip address is: {{ ansible_eth1['ipv4']['address'] }}
+I am a member of these groups: {% for g in  hostvars[ansible_hostname]['groups'] %}{% if ansible_hostname in hostvars[ansible_hostname]['groups'][g] %}{{ g }} {% endif %}{% endfor %} 
+I have these network interfaces: {% for n in ansible_interfaces %}{{ n }} {% endfor %}

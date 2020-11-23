@@ -1,0 +1,28 @@
+---
+- name: Task 5 Templates
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Copy over png
+      copy:
+        src: files/obey.png
+        dest: /var/www/html/obey.png
+
+    - name: Set up index
+      template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
+
+    - name: Change config
+      lineinfile:
+        regexp: "Options Indexes FollowSymLinks"
+        line: "     Options -Indexes +FollowSymLinks"
+        path: /etc/httpd/conf/httpd.conf
+      notify: restart_httpd
+
+  handlers:
+    - name: restart_httpd
+      service:
+        name: httpd
+        state: restarted
+

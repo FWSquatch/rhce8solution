@@ -1,0 +1,43 @@
+---
+- name: Task 3 - users
+  hosts: all
+  become: true
+  vars_files: vars/wrasslers.yml
+  tasks:
+    - name: Create groups
+      group:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - goodguys
+        - badguys
+
+    - name: Badguys on dev nodes
+      user:
+        name: "{{ item.name }}"
+        uid: "{{ item.uid }}"
+        groups: "{{ item.groups }}"
+        append: true
+        shell: "{{ item.shell }}"
+      loop: "{{ users }}"
+      when: item.groups == 'badguys' and ansible_hostname in groups['dev']
+
+    - name: Badguys with /bin/false
+      user:
+        name: "{{ item.name }}"
+        uid: "{{ item.uid }}"
+        groups: "{{ item.groups }}"
+        append: true
+        shell: "{{ item.shell }}"
+      loop: "{{ users }}"
+      when: item.groups == 'badguys' and item.shell == '/bin/false' and ansible_hostname in groups['db']
+
+    - name: Goodguys on all nodes
+      user:
+        name: "{{ item.name }}"
+        uid: "{{ item.uid }}"
+        groups: "{{ item.groups }}"
+        append: true
+        shell: "{{ item.shell }}"
+      loop: "{{ users }}"
+      when: item.groups == 'goodguys' or item.groups == 'goodguys,wheel'

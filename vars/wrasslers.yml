@@ -1,0 +1,25 @@
+users:
+  - name: hulk
+    groups: goodguys,wheel
+    uid: 5001
+    shell: /bin/bash
+    
+  - name: hillbillyjim
+    groups: goodguys
+    uid: 5002
+    shell: /bin/false
+
+  - name: roddy
+    groups: badguys
+    uid: 6001
+    shell: /bin/bash
+
+  - name: bigjohnstudd
+    groups: badguys
+    uid: 6002
+    shell: /bin/false
+
+  - name: nikoli
+    groups: badguys
+    uid: 6003
+    shell: /bin/bash
