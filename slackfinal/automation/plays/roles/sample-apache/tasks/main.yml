@@ -1,0 +1,36 @@
+---
+# tasks file for sample-apache
+- name: Install Packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - httpd
+    - mod_ssl
+    - php
+
+- name: Start up services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+   - firewalld
+   - httpd
+
+- name: Set up FW rules
+  firewalld:
+    port: "{{ item }}/tcp"
+    state: enabled
+    immediate: true
+    permanent: true
+  loop:
+    - 80
+    - 443
+
+- name: Set up index.html
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+  notify: restart_httpd
+

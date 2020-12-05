@@ -1,0 +1,20 @@
+---
+- name: Task 8 Software Repos
+  hosts: all
+  become: true
+  tasks:
+    - name: Add multiple repositories into the same file (1/2)
+      yum_repository:
+        name: rpms
+        description: "This is the main repo file"
+        file: ansi-repo
+        baseurl: http://repo.ansi.example.com/BaseOS
+        enabled: true 
+    - name: Add multiple repositories into the same file (2/2)
+      yum_repository:
+        name: rp
+        description: "This is the main repo file"
+        file: ansi-repo
+        baseurl: http://repo.ansi.example.com/AppStream
+        enabled: true
+    

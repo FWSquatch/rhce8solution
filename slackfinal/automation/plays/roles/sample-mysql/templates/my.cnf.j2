@@ -1,0 +1,22 @@
+#
+# This group is read both both by the client and the server
+# use it for options that affect everything
+#
+[client-server]
+
+#
+# include all files from the config directory
+# oyeah
+!includedir /etc/my.cnf.d
+
+[mysqld] 
+bind_address = {{ ansible_default_ipv4.address }} 
+skip_name_resolve 
+datadir=/var/lib/mysql 
+socket=/var/lib/mysql/mysql.sock  
+symbolic-links=0 
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES   
+
+[mysqld_safe] 
+log-error=/var/log/mysqld.log 
+pid-file=/var/run/mysqld/mysqld.pid

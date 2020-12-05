@@ -1,0 +1,12 @@
+---
+- name: Delet
+  hosts: all
+  become: true
+  vars_files:
+    - vars/user_list.yml
+  tasks:
+    - name: delete
+      user:
+        name: "{{ item.username }}"
+        state: absent
+      loop: "{{ users }}"

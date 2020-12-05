@@ -1,0 +1,37 @@
+---
+- name: Task 4 Configure SSH Server
+  hosts: all
+  become: true
+  vars_files:
+    - secret.yml
+  force_handlers: true
+  tasks:
+    - name: Change Config
+      block:
+        - name: Set banner
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: ^Banner
+            line: Banner /etc/motd
+          notify: restart_sshd
+  
+        - name: Set X11
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: ^X11Forwarding
+            line: X11Forwarding no
+          notify: restart_sshd
+   
+        - name: Set MaxAutTries
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: ^MaxAuthTries
+            line: MaxAuthTries 3
+          notify: restart_sshd
+
+  handlers:
+    - name: restart_sshd
+      service:
+        name: sshd
+        state: restarted
+

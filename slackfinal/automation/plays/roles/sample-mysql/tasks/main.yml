@@ -1,0 +1,86 @@
+---
+# tasks file for sample-mysql
+- name: Wipe FS from sdb
+  command: wipefs -a /dev/sdb
+  when: ansible_devices['sdb']['partitions']['sdb1']['holders'] is not defined
+
+- name: Create Partition
+  parted:
+    device: /dev/sdb
+    number: 1
+    part_end: 800MB
+    state: present
+
+- name: Create Volume Group
+  lvg:
+    vg: vg_database
+    pvs: /dev/sdb1
+
+- name: Create Logical Volume
+  lvol:
+    vg: vg_database
+    lv: lv_mysql
+    size: 512M
+
+- name: Create FS
+  filesystem:
+    fstype: xfs
+    dev: /dev/mapper/vg_database-lv_mysql
+
+- name: Mount LV
+  mount:
+    path: /mnt/mysql_backups
+    src: /dev/mapper/vg_database-lv_mysql
+    fstype: xfs
+    state: mounted
+ 
+- name: Install Packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - mariadb
+    - mariadb-server
+    - firewalld
+    - python3-PyMySQL
+
+- name: Start services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - mariadb
+    - firewalld
+
+- name: Setup FW Rules
+  firewalld:
+    port: "{{ item }}/tcp"
+    state: enabled
+    permanent: true
+    immediate: true
+  loop:
+    - 22
+    - 3306
+
+- name: User Block
+  block:
+    - name: Create database root user pw
+      mysql_user:
+        name: root 
+        password: "{{ database_password }}"
+  rescue:
+    - name: root user exists
+      mysql_user:
+        login_user: root
+        login_password: devops
+        name: root 
+        password: "{{ database_password }}"
+  ignore_errors: true
+
+- name: Generate conf file
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  notify: restart_mariadb
+

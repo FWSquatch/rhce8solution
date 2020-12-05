@@ -1,0 +1,9 @@
+---
+- name: Task 3 File Content
+  hosts: all
+  become: true
+  tasks:
+    - name: Place motd.yml file
+      template:
+        src: templates/motd.j2
+        dest: /etc/motd

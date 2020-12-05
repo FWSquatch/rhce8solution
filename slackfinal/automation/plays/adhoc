@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for host in {1..4}
+do
+	sshpass -p vagrant ssh-copy-id vagrant@node$host -f
+done
+ansible all -m user -a "name=automation groups=wheel append=true password={{ 'devops' | password_hash('sha512','mysalt') }}" -b -u vagrant
+
+ansible all -m authorized_key -a "user=automation state=present key={{ lookup('file','/home/automation/.ssh/id_rsa.pub') }}" -b -u vagrant
+
+ansible all -m copy -a "content='automation ALL=(ALL) NOPASSWD:ALL' dest=/etc/sudoers.d/automation" -b -u vagrant

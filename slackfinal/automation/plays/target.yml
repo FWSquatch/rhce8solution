@@ -1,0 +1,10 @@
+---
+- name: Task 17 Services
+  hosts: all
+  become: true
+  tasks:
+    - name: Set target to multi-user
+      file:
+        src: /usr/lib/systemd/system/multi-user.target
+        dest: /etc/systemd/system/default.target
+        state: link

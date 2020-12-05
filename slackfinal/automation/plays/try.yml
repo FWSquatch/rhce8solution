@@ -1,0 +1,8 @@
+---
+- name: Test
+  hosts: node4
+  become: true
+  tasks:
+    - name: hello
+      debug:
+        msg: "{{ hostvars['node3'] }}"

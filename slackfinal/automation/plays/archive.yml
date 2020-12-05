@@ -1,0 +1,16 @@
+---
+- name: Task 14 Archiving
+  hosts: database
+  become: true
+  tasks:
+    - name: Create database_list.txt file
+      copy:
+        content: dev,test,qa,prod
+        dest: /mnt/mysql_backups/database_list.txt
+
+    - name: Use gzip to compress database_list.txt
+      archive:
+        path: /mnt/mysql_backups/database_list.txt
+        dest: /mnt/mysql_backups/archive.gz
+        format: gz
+

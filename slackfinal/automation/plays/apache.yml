@@ -1,0 +1,6 @@
+---
+- name: Task 10 More Roles
+  hosts: webservers
+  become: true
+  roles:
+    - sample-apache

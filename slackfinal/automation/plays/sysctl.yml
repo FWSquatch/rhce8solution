@@ -1,0 +1,11 @@
+---
+- name: Task 13 Use Conditionals
+  hosts: all
+  become: true
+  tasks:
+    - name: Set vm.swappiness
+      sysctl:
+        name: vm.swappiness
+        value: "5"
+        state: present
+      when: ansible_memtotal_mb > 512

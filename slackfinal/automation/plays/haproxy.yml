@@ -1,0 +1,13 @@
+---
+- name: Task 11 Ansible-Galaxy
+  hosts: proxy
+  become: true
+  roles:
+    - geerlingguy.haproxy
+  pre_tasks:
+    - name: Open FW port
+      firewalld:
+        service: http
+        state: enabled
+        immediate: true
+        permanent: true
