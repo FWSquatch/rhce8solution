@@ -1,0 +1,9 @@
+---
+- name: NTP System Role
+  hosts: all
+  become: true
+  vars:
+    - hostname: 132.163.97.1 # Hostname or address of the server
+      iburst: yes
+  roles:
+    - rhel-system-roles.timesync

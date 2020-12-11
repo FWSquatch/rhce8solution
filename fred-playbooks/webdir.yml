@@ -1,0 +1,21 @@
+---
+- name: Web Dir Task
+  hosts: dev
+  become: true
+  tasks:  
+    - name: Create /web directory
+      file:
+        path: /web
+        group: httpd
+        mode: "2775"
+        state: directory
+
+    - name: Create link to /web
+      file:
+        src: /web
+        dest: /var/www/html
+        state: link
+    - name: Create index
+      copy:
+        content: Development
+        dest: /web/index.html

@@ -1,0 +1,43 @@
+---
+- name: Create users for dev, test
+  hosts:
+    - dev
+    - test
+  vars_files: 
+    - vault.yml
+    - user_list.yml
+  become: true
+  tasks:
+  - name: Ensure group "devops" exists
+    group:
+      name: devops
+      state: present
+            
+  - name: Create Users
+    user:
+      name: "{{ item.name }}"
+      groups: devops
+      append: true
+      shell: "{{ item.shell }}"
+      password: "{{ dev_var | password_hash('sha512', 'mysecretsalt') }}"
+    loop: "{{ developers }}"
+- name: Create users for prod
+  hosts: prod
+  vars_files: 
+    - vault.yml
+    - user_list.yml
+  become: true
+  tasks:
+  - name: Ensure group "opsmgr" exists
+    group:
+      name: opsmgr
+      state: present
+            
+  - name: Create Users
+    user:
+      name: "{{ item.name }}"
+      groups: opsmgr
+      append: true
+      shell: "{{ item.shell }}"
+      password: "{{ mgr_var | password_hash('sha512', 'mysecretsalt') }}"
+    loop: "{{ managers }}"

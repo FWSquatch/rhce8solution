@@ -1,0 +1,11 @@
+---
+- name: play
+  hosts: node3.ansi.example.com 
+  become: true
+  tasks:
+      - name: delete users
+        user:
+          name: fred
+          state: absent
+          force: yes 
+          remove: yes 

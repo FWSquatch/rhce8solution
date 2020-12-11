@@ -1,0 +1,9 @@
+---
+- name: Wipe /dev/sdb
+  hosts: all
+  become: true
+  tasks:
+    - name: Wipe if exists
+      command: wipefs -a /dev/sdb
+      when: ansible_devices['sdb'] is defined
+

@@ -1,0 +1,12 @@
+---
+# defaults file for apache
+apache_pack:
+  - httpd
+  - mod_ssl
+  - firewalld
+apache_serv:
+  - httpd
+  - firewalld
+apache_rules:
+  - http
+  - https

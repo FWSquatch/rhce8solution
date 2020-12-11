@@ -1,0 +1,13 @@
+developers:
+  - name: john
+    shell: /bin/bash
+  - name: paul
+    shell: /bin/bash
+  - name: george
+    shell: /bin/sh
+
+managers:
+  - name: ringo
+    shell: /bin/bash
+  - name: jimmy
+    shell: /bin/sh

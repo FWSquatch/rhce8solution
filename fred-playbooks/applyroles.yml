@@ -1,0 +1,39 @@
+---
+- name: Balancers Play
+  hosts: balancers
+  become: true
+  vars:
+    haproxy_backend_servers:
+      - name: app1
+        address: 192.168.55.203:80
+      - name: app2
+        address: 192.168.55.204:80
+  roles:
+    - geerlingguy.haproxy
+
+  tasks:
+    - name: Open FW
+      firewalld:
+        service: http
+        state: enabled
+        immediate: true
+        permanent: true
+
+- name: Webservers Play
+  hosts: webservers
+  become: true
+  roles:
+    - fvarovillodres.lamp
+  tasks:
+    - name: Create index file
+      template:
+        src: index.php.j2
+        dest: /var/www/html/index.php
+
+    - name: Open FW
+      firewalld:
+        service: http
+        state: enabled
+        immediate: true
+        permanent: true
+
