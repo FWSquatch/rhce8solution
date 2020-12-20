@@ -1,0 +1,21 @@
+---
+crew:
+  - username: naomi
+    groups: wheel,brains
+    shell: /bin/bash
+    expires: -1
+  
+  - username: amos
+    groups: muscle
+    shell: /sbin/nologin
+    expires: 1613760139
+  
+  - username: alex
+    groups: brains
+    shell: /bin/sh
+    expires: 1613760139
+  
+  - username: bobbie
+    groups: muscle
+    shell: /bin/bash
+    expires: 1613760139

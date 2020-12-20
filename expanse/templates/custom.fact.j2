@@ -1,0 +1,9 @@
+[customer]
+{% if ansible_hostname in groups['nyc_aws'] %}
+company=Big Apple Hosting
+contact=miller@bigapple.com
+{% endif %}
+{% if ansible_hostname in groups['chi_aws'] %}
+company=Windy City Hosting
+contact=chrisjen@windycity.com
+{% endif %}

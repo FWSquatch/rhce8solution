@@ -1,0 +1,31 @@
+---
+- name: Task 5 Set timezone
+  hosts: all
+  become: true
+  tasks:
+    - name: Set timezone to Central
+      timezone:
+        name: America/Chicago
+      when: ansible_hostname in groups['chi_aws']
+
+    - name: Set timezone to Eastern
+      timezone:
+        name: America/New_York
+      when: ansible_hostname in groups['nyc_aws']
+
+    - block:
+      - name: Create log file
+        template:
+          src: templates/logins.log.j2
+          dest: /var/log/logins.log
+          owner: root
+          group: root
+          mode: "0766"
+  
+      - name: Set up skeleton bashrc file
+        lineinfile:
+          path: /etc/skel/.bashrc
+          regexp: ^date >>
+          line: date >> /var/log/logins.log
+      when: ansible_hostname in groups['web']  
+       

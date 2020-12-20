@@ -1,0 +1,37 @@
+---
+- name: Task 16 Galaxy
+  hosts: all
+  become: true
+  vars:
+    nfs_exports: ["/logical/backups *(rw,sync,no_root_squash)"]
+  tasks:  
+    - block:
+      - name: Apply role
+        import_role:
+          name: geerlingguy.nfs
+      - name: Open FW
+        firewalld:
+          service: nfs
+          state: enabled
+          immediate: true
+          permanent: true
+      when: ansible_hostname == 'node1'
+    - block:
+      - name: install nfs-utils
+        yum:
+          name: nfs-utils
+          state: latest
+      - name: Create mount point
+        file:
+          path: /configs
+          state: directory
+          mode: "0655"
+          
+      - name: Mount nfs share
+        mount:
+          path: /configs
+          src: node1:/logical/backups
+          fstype: nfs
+          state: mounted
+      when: ansible_hostname in groups['nyc_aws']  
+      

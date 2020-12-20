@@ -1,0 +1,23 @@
+---
+- name: Task 14 Using Variables
+  hosts: all
+  become: true
+  tasks:
+    - name: Get value
+      shell: grep ready /var/log/mariadb/mariadb.log | tail -n1 | awk '{print $2,"on",$1}'
+      register: maria_status
+      when: ansible_hostname == 'node1'
+    - block:
+        - name: Insert Database restart time
+          lineinfile:
+            path: /var/www/html/index.html
+            regexp: ^The database
+            line: "The database was last restarted at {{ hostvars['node1'].maria_status.stdout }}"
+          failed_when: hostvars['node1'].maria_status.stdout == ""
+      rescue:
+        - name: RESCUE - No database restart time
+          lineinfile:
+            path: /var/www/html/index.html
+            regexp: ^The database
+            line: The database is NOT RUNNING!
+      when: ansible_hostname in groups['web']

@@ -1,0 +1,6 @@
+---
+- name: Task 9 Create a role
+  hosts: node2
+  become: true
+  roles:
+    - vsftpd-web

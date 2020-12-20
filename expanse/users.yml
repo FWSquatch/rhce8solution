@@ -1,0 +1,91 @@
+---
+- name: Task 3 Users
+  hosts: all
+  become: true
+  vars_files:
+    - vars/crew.yml
+    - vars/secret.yml
+  tasks:
+    - block:
+      - name: Set up groups
+        group:
+          name: "{{ item }}"
+          state: present
+        loop:
+          - brains
+          - muscle
+
+      - name: Set up dev users
+        user:
+          name: "{{ item.username }}"
+          shell: "{{ item.shell }}"
+          expires: "{{ item.expires }}"
+          groups: "{{ item.groups }}"
+          append: true
+        loop: "{{ crew }}"
+
+      - name: Set up passwords for muscle group
+        user:
+          name: "{{ item.username }}"
+          password: "{{ muscle_pass | password_hash('sha512','salt') }}"
+        loop: "{{ crew }}"
+        when: item.groups == "muscle"
+
+      - name: Set up passwords for everyone else
+        user:
+          name: "{{ item.username }}"
+          password: "{{ crew_pass | password_hash('sha512','salt') }}"
+        loop: "{{ crew }}"
+        when: item.groups != "muscle"
+
+      when: ansible_hostname in groups['dev']
+    
+    - block:
+      - name: Set up groups
+        group:
+          name: muscle
+          state: present
+
+      - name: Set up muscle users
+        user:
+          name: "{{ item.username }}"
+          shell: "{{ item.shell }}"
+          expires: "{{ item.expires }}"
+          groups: "{{ item.groups }}"
+          append: true
+        loop: "{{ crew }}"
+        when: item.groups == "muscle"
+
+      - name: Set up passwords for muscle group
+        user:
+          name: "{{ item.username }}"
+          password: "{{ muscle_pass | password_hash('sha512','salt') }}"
+        loop: "{{ crew }}"
+        when: item.groups == "muscle"
+
+      when: ansible_hostname in groups['nyc_aws']
+
+    - block:
+      - name: Set up groups
+        group:
+          name: brains
+          state: present
+
+      - name: Set up brains users
+        user:
+          name: "{{ item.username }}"
+          shell: "{{ item.shell }}"
+          expires: "{{ item.expires }}"
+          groups: "{{ item.groups }}"
+          append: true
+        loop: "{{ crew }}"
+        when: item.groups == "brains"
+
+      - name: Set up passwords for brains group
+        user:
+          name: "{{ item.username }}"
+          password: "{{ crew_pass | password_hash('sha512','salt') }}"
+        loop: "{{ crew }}"
+        when: item.groups == "brains"
+
+      when: ansible_hostname in groups['web']

@@ -1,0 +1,42 @@
+---
+# tasks file for vsftpd-web
+- name: Install vsftpd
+  yum:
+    name: vsftpd
+    state: latest
+- name: Start service
+  service:
+    name: vsftpd
+    state: started
+    enabled: true
+- name: FW Rules
+  firewalld:
+    service: ftp
+    state: enabled
+    immediate: true
+    permanent: true
+- name: Copy banned_emails
+  copy:
+    src: files/banned_emails
+    dest: /etc/vsftpd/banned_emails
+
+- name: Set up anon 
+  lineinfile:
+    path: /etc/vsftpd/vsftpd.conf
+    regexp: ^anonymous_enable=
+    line: "anonymous_enable={{ ftp_anon_enable }}"
+  notify: restart_vsftpd
+- name: Set up banner
+  lineinfile:
+    path: /etc/vsftpd/vsftpd.conf
+    regexp: blah
+    line: "ftpd_banner=Welcome to {{ ftp_banner }} FTP service."
+  notify: restart_vsftpd
+
+- name: Set up deny emails
+  lineinfile:
+    path: /etc/vsftpd/vsftpd.conf
+    regexp: ^deny_email_enable=
+    line: "deny_email_enable={{ deny_emails }}"
+  notify: restart_vsftpd
+

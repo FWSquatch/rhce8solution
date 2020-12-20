@@ -1,0 +1,28 @@
+---
+- name: Task 12 Blocks
+  hosts: web
+  become: true
+  tasks:
+    - block:
+      - name: Create a backup of httpd.conf
+        fetch:
+          src: /etc/httpd/conf/httpd.conf
+          dest: files/httpd.conf.backup
+      - name: Upload bad config
+        copy:
+          content: "I am bad"
+          dest: /etc/httpd/conf/httpd.conf
+      - name: Try to restart the server
+        service:
+          name: httpd
+          state: restarted
+          enabled: true
+      rescue:
+        - name: RESCUE TIME! Shit went bad, yo!
+          copy:
+            src: "files/httpd.conf.backup/{{ ansible_hostname }}/etc/httpd/conf/httpd.conf"
+            dest: /etc/httpd/conf/httpd.conf
+        - name: Restart the server
+          service:
+            name: httpd
+            state: restarted

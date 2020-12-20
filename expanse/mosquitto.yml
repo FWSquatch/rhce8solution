@@ -1,0 +1,17 @@
+---
+- name: Task 13 Unfamiliar Roles
+  hosts: dev
+  become: true
+  roles:
+    - name: sansible.mosquitto
+      sansible_mosquitto_settings:
+        port: 2883
+        allow_anonymous: "false"
+
+  pre_tasks:
+    - name: Open FW for port 2883
+      firewalld:
+        port: 2883/tcp
+        state: enabled
+        immediate: true
+        permanent: true

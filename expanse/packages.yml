@@ -1,0 +1,75 @@
+---
+- name: Task 6 Install packages
+  hosts: all
+  become: true
+  tasks:
+    - name: Install for dev
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - git
+        - php
+        - httpd
+        - mod_ssl
+        - mariadb
+        - mariadb-server
+      when: ansible_hostname in groups['dev']
+
+    - name: Install for web
+      yum:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - php
+        - httpd
+        - mod_ssl
+      when: ansible_hostname in groups['dev']
+
+    - name: Update all to latest
+      yum:
+        name: "*"
+        state: latest
+
+    - block:
+      - name: Start up service
+        service:
+          name: "{{ item }}"
+          state: started
+          enabled: true
+        loop:
+          - firewalld
+          - httpd
+      - name: FW Rules
+        firewalld:
+          service: "{{ item }}"
+          state: enabled
+          immediate: true
+          permanent: true
+        loop:
+          - http
+          - https
+      when: ansible_hostname in groups['web']
+
+    - block:
+      - name: Start up service
+        service:
+          name: "{{ item }}"
+          state: started
+          enabled: true
+        loop:
+          - firewalld
+          - httpd
+          - mariadb
+
+      - name: FW Rules
+        firewalld:
+          port: "{{ item }}/tcp"
+          state: enabled
+          immediate: true
+          permanent: true
+        loop:
+          - '80'
+          - '443'
+          - '3306'
+      when: ansible_hostname in groups['dev']

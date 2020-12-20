@@ -1,0 +1,10 @@
+[dev]
+node1
+
+[chi_aws]
+
+[nyc_aws]
+
+[web:children]
+chi_aws
+nyc_aws

@@ -1,0 +1,5 @@
+---
+# defaults file for vsftpd-web
+ftp_banner: Eff Tee Pee
+ftp_anon_enable: YES
+deny_emails: YES

@@ -1,0 +1,30 @@
+---
+- name: Task 15 Archiving
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Create tmp/backups directory
+      file:
+        path: /tmp/backups
+        state: directory
+        mode: "0777"
+
+- name: Archive the etc
+  hosts: all
+  become: true
+  tasks:  
+    - name: Create a bz2 archive of multiple files, rooted at /path
+      archive:
+        path: /etc
+        dest: "/tmp/{{ ansible_hostname }}_etc_backup.tar.bz2"
+        format: bz2
+    - name: Get the archive
+      fetch:
+        src: "/tmp/{{ ansible_hostname }}_etc_backup.tar.bz2"
+        dest: /tmp/backups
+    - name: copy to node1
+      copy:
+        src: /tmp/backups
+        dest: /logical/backups
+      when: ansible_hostname == "node1"
