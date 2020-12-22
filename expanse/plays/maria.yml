@@ -1,0 +1,23 @@
+---
+- name: Task 14 Using Variables
+  hosts: all
+  become: true
+  tasks:
+    - name: Check for maria restart
+      shell: grep ready /var/log/mariadb/mariadb.log | tail -n1 | awk '{print $2,"on",$1}'
+      register: maria
+      delegate_to: node1
+
+    - name: Add line to index has been restarted.
+      lineinfile:
+        path: /var/www/html/index.html
+        regexp: ^The database.*
+        line: "The database was last restarted at {{ maria.stdout }}"
+      when: maria.stdout != '' and ansible_hostname != 'node1'
+     
+    - name: Add line to index never been started
+      lineinfile:
+        path: /var/www/html/index.html
+        regexp: ^The database.*
+        line: The database is NOT RUNNING!
+      when: maria.stdout == '' and ansible_hostname != 'node1'

@@ -1,0 +1,30 @@
+---
+- name: Task 5 Timezone
+  hosts: web
+  become: true
+  tasks:
+    - name: Set chi_aws to Central time
+      timezone:
+        name: America/Chicago
+      when: ansible_hostname in groups['chi_aws']
+
+    - name: Set nyc_aws to Eastern time
+      timezone:
+        name: America/New_York
+      when: ansible_hostname in groups['nyc_aws']
+
+    - name: Create log file
+      copy:
+        content: "---- User Logins for {{ ansible_fqdn }}----"
+        dest: /var/log/logins.log
+        owner: root
+        group: root
+        mode: "0766"
+
+    - name: Add line to /etc/skel/.bashrc
+      lineinfile:
+        path: /etc/skel/.bashrc
+        regexp: ^date >> /var/log/logins.log
+        line: date >> /var/log/logins.log
+
+

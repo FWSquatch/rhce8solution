@@ -1,0 +1,2 @@
+<H2>Welcome to {{ ansible_hostname }} at {{ ansible_local['custom']['customer']['company'] }}!</H2>
+<p>This webserver has {{ ansible_memtotal_mb }}MB of RAM to server up your requests on {{ ansible_eth1['ipv4']['address'] }}. If you have questions, please email {{ ansible_local['custom']['customer']['contact'] }}</p>

@@ -1,0 +1,23 @@
+---
+- name: Task 4 Repos
+  hosts: all
+  become: true
+  tasks:
+    - name: Add BaseOS Repo
+      yum_repository:
+        name: base 
+        description: Exam BaseOS Repo
+        file: exam
+        baseurl: http://repo/BaseOS
+        gpgcheck: no
+        enabled: yes
+    
+    - name: Add AppStream Repo
+      yum_repository:
+        name: apps
+        description: Exam AppStream Repo
+        file: exam
+        baseurl: http://repo/AppStream
+        gpgcheck: no
+        enabled: yes
+    

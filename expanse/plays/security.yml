@@ -1,0 +1,22 @@
+---
+- name: Task 13 Security
+  hosts: web
+  become: true
+  vars:
+    selinux_policy: targeted
+    selinux_state: enforcing
+  tasks:
+    - name: Apply 9999
+      import_role:
+        name: rhel-system-roles.selinux
+      vars: 
+        selinux_state: enforcing
+      when: hostvars[ansible_hostname]['security_group'] == 'web_9999'
+      
+    - name: Apply 9898
+      import_role:
+        name: rhel-system-roles.selinux
+      vars: 
+        selinux_state: permissive
+      when: hostvars[ansible_hostname]['security_group'] == 'web_9898'
+      

@@ -1,0 +1,33 @@
+---
+- name: Task 8 Facts
+  hosts: web
+  become: true
+  tasks:
+    - name: Create custom facts dir
+      file:
+        path: /etc/ansible/facts.d
+        state: directory
+    - name: Place fact file nyc_aws
+      copy:
+        content: |
+          [customer]
+          company=Big Apple Hosting
+          contact=miller@bigapplehosting.com
+        dest: /etc/ansible/facts.d/custom.fact
+      when: ansible_hostname in groups['nyc_aws']
+    
+    - name: Place fact file chi_aws
+      copy:
+        content: |
+          [customer]
+          company=Windy City Hosting
+          contact=chrisjen@windycityhosting.com
+        dest: /etc/ansible/facts.d/custom.fact
+      when: ansible_hostname in groups['chi_aws']
+    
+    - name: Refresh facts
+      setup:
+    - name: Generate index file
+      template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html

@@ -1,0 +1,15 @@
+---
+- import_playbook: repo.yml
+- import_playbook: time.yml
+- import_playbook: packages.yml
+- import_playbook: users.yml
+- import_playbook: facts.yml
+- import_playbook: vsftpd.yml
+- import_playbook: timesync.yml
+- import_playbook: storage.yml
+- import_playbook: rescue.yml
+- import_playbook: security.yml
+- import_playbook: maria.yml
+- import_playbook: config.yml
+- import_playbook: scheduled.yml
+- import_playbook: nfs.yml

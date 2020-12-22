@@ -1,0 +1,32 @@
+---
+- name: Task 12 Blocks
+  hosts: web
+  become: true
+  gather_facts: false
+  tasks:
+    - block:
+      - name: Grab old httpd.conf file
+        fetch:
+          src: /etc/httpd/conf/httpd.conf
+          dest: /tmp/httpd.conf
+          flat: true
+      - name: Upload bad config
+        copy:
+          content: I am bad, yo.
+          dest: /etc/httpd/conf/httpd.conf
+      - name: Start up service
+        service:
+          name: httpd
+          state: started
+          enabled: true
+      rescue:
+        - name: Oh NO Upload the backup!
+          copy:
+            src: /tmp/httpd.conf
+            dest: /etc/httpd/conf/httpd.conf
+          notify: restart_httpd
+  handlers:
+    - name: restart_httpd
+      service:
+        name: httpd
+        state: restarted

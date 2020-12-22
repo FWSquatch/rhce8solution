@@ -1,0 +1,8 @@
+---
+- name: TRY
+  hosts: node3
+  become: true
+  tasks:
+  - debug:
+      msg: "{{ hostvars[ansible_hostname]['security_group'] }}"
+     

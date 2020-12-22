@@ -1,0 +1,77 @@
+---
+- name: Task 11 Storage
+  hosts: all
+  become: true
+  tasks:
+    - name: Create mount point for backups
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /logical
+        - "/{{ ansible_hostname }}-backup"
+
+    - block:
+        - name: Setup LVM partition
+          parted: 
+            device: /dev/sdb
+            number: 1       
+            state: present  
+            flags: [ lvm ]  
+        - name: Set up vg
+          lvg:
+            vg: belters
+            pvs: /dev/sdb1
+        - name: Set up lv
+          lvol:
+            vg: belters
+            lv: tycho_station
+            size: 100%FREE
+            state: present
+        - name: Create filesystem lv
+          filesystem:
+           fstype: ext3
+           dev: /dev/mapper/belters-tycho_station
+        - name: Mount logical
+          mount:
+            path: /logical
+            src: /dev/mapper/belters-tycho_station
+            fstype: ext3
+            state: mounted
+        - name: Create partition on sdc
+          parted:
+            device: /dev/sdc
+            number: 1
+            state: present
+        - name: Refreshing facts
+          setup:
+        - name: Create fs on sdc
+          filesystem:
+            fstype: ext4
+            dev: /dev/sdc1
+        - name: Mount backup on sdc
+          mount:
+            path: "/{{ ansible_hostname }}-backup"
+            src: /dev/sdc1
+            fstype: ext4
+            state: mounted
+
+      when: ansible_devices.sdc is defined
+
+    - block:
+        - name: Set up partition
+          parted:
+            device: /dev/sdb
+            number: 1
+            state: present
+        - name: Set up filesystem on sdb
+          filesystem:
+            fstype: ext4
+            dev: /dev/sdb1
+        - name: Mount backup on sdb
+          mount:
+            path: "/{{ ansible_hostname }}-backup"
+            src: /dev/sdb1
+            fstype: ext4
+            state: mounted
+      when: ansible_devices.sdc is not defined

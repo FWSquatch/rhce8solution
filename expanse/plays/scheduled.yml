@@ -1,0 +1,12 @@
+---
+- name: Task 16 Scheduled Tasks
+  hosts: all
+  become: true
+  tasks:
+  - name: Ensure a job that runs at 5pm exists
+    cron:
+      name: "Dismiss the staff"
+      minute: "0"
+      hour: "17"
+      job: "/usr/bin/wall 'Time to go home!'"
+  
