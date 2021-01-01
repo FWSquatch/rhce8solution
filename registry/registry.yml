@@ -7,6 +7,7 @@
     insecure_reg: true
     images:
       - hello-world
+      - httpd
       - mysql
       - mysql:5.7
   tasks:
